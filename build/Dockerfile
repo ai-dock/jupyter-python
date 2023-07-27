@@ -14,6 +14,9 @@ LABEL maintainer="Rob Ballantyne <rob@dynamedia.uk>"
 # Copy early so we can use scripts in the build - Changes to these files will invalidate the cache and cause a rebuild.
 COPY ./COPY_ROOT/ /
 
+ARG PYTHON_VERSION
+ARG PYTHON_MAMBA_NAME
+
 # Use build scripts to ensure we can build all targets from one Dockerfile in a single layer.
 # Don't put anything heavy in here - We can use multi-stage building above if necessary.
 RUN bash -c /opt/ai-dock/bin/build/layer0/init.sh

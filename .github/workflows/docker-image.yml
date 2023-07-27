@@ -12,12 +12,19 @@ env:
 jobs:
   ubuntu-base:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python:
+          - [3.8, python_38]
+          - [3.9, python_39]
+          - [3.10, python_310]
+          - [3.11, python_311]
     steps:
       -
         name: Env Setter
         run: |
           echo "PACKAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-          echo "TAG=ubuntu-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
+          echo "TAG={{ matrix.python[0] }}-ubuntu-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -35,7 +42,8 @@ jobs:
           context: build
           build-args: |
             IMAGE_BASE=ghcr.io/ai-dock/base-image:ubuntu-${{ env.UBUNTU_VERSION }}
-            XPU_TARGET=CPU
+            PYTHON_VERSION={{ matrix.python[0] }}
+            PYTHON_MAMBA_NAME={{ matrix.python[1] }}
           push: true
           # Avoids unknown/unknown architecture and extra metadata
           provenance: false
@@ -46,6 +54,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        python:
+          - [3.8, python_38]
+          - [3.9, python_39]
+          - [3.10, python_310]
+          - [3.11, python_311]
         cuda:
           - 11.8.0
           - 12.1.0
@@ -66,7 +79,7 @@ jobs:
         name: Env Setter
         run: |
           echo "PACKAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-          echo "TAG=cuda-${{ matrix.cuda }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
+          echo "TAG={{ matrix.python[0] }}-cuda-${{ matrix.cuda }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -84,9 +97,8 @@ jobs:
           context: build
           build-args: |
             IMAGE_BASE=ghcr.io/ai-dock/base-image:cuda-${{ matrix.cuda }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}
-            XPU_TARGET=NVIDIA_GPU
-            CUDA_VERSION=${{ matrix.cuda }}
-            CUDA_LEVEL=${{ matrix.level }}
+            PYTHON_VERSION={{ matrix.python[0] }}
+            PYTHON_MAMBA_NAME={{ matrix.python[1] }}
           push: true
           provenance: false
           tags: |
@@ -96,6 +108,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        python:
+          - [3.8, python_38]
+          - [3.9, python_39]
+          - [3.10, python_310]
+          - [3.11, python_311]
         rocm:
           - 5.4.1
         level:
@@ -107,7 +124,7 @@ jobs:
         name: Env Setter
         run: |
           echo "PACKAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-          echo "TAG=rocm-${{ matrix.rocm }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
+          echo "TAG={{ matrix.python[0] }}-rocm-${{ matrix.rocm }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -125,9 +142,8 @@ jobs:
           context: build
           build-args: |
             IMAGE_BASE=ghcr.io/ai-dock/base-image:rocm-${{ matrix.rocm }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}
-            XPU_TARGET=AMD_GPU
-            ROCM_VERSION=${{ matrix.rocm }}
-            ROCM_LEVEL=${{ matrix.level }}
+            PYTHON_VERSION={{ matrix.python[0] }}
+            PYTHON_MAMBA_NAME={{ matrix.python[1] }}
           push: true
           provenance: false
           tags: |

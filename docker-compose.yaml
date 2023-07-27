@@ -6,6 +6,9 @@ services:
       context: ./build
       args:
         IMAGE_BASE: ${IMAGE_BASE}
+        IMAGE_TAG: ${IMAGE_TAG}
+        PYTHON_VERSION: ${PYTHON_VERSION}
+        PYTHON_MAMBA_NAME: ${PYTHON_MAMBA_NAME}
       tags:
         - "ghcr.io/ai-dock/extended-base-template:${IMAGE_TAG}"
     image: ghcr.io/ai-dock/extended-base-template:${IMAGE_TAG}
@@ -31,6 +34,8 @@ services:
     ports:
         # SSH available on host machine port 2222 to avoid conflict. Change to suit
         - 2222:22
+        # Jupyter webserver
+        - 8888:8888
         # Rclone webserver for interactive configuration
         - 53682:53682
     environment:
