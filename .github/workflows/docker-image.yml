@@ -15,10 +15,10 @@ jobs:
     strategy:
       matrix:
         python:
-          - [3.8, python_38]
-          - [3.9, python_39]
-          - [3.10, python_310]
-          - [3.11, python_311]
+          - ["3.8", "python_38"]
+          - ["3.9", "python_39"]
+          - ["3.10", "python_310"]
+          - ["3.11", "python_311"]
     steps:
       -
         name: Env Setter
@@ -55,10 +55,10 @@ jobs:
     strategy:
       matrix:
         python:
-          - [3.8, python_38]
-          - [3.9, python_39]
-          - [3.10, python_310]
-          - [3.11, python_311]
+          - ["3.8", "python_38"]
+          - ["3.9", "python_39"]
+          - ["3.10", "python_310"]
+          - ["3.11", "python_311"]
         cuda:
           - 11.8.0
           - 12.1.0
@@ -109,10 +109,10 @@ jobs:
     strategy:
       matrix:
         python:
-          - [3.8, python_38]
-          - [3.9, python_39]
-          - [3.10, python_310]
-          - [3.11, python_311]
+          - ["3.8", "python_38"]
+          - ["3.9", "python_39"]
+          - ["3.10", "python_310"]
+          - ["3.11", "python_311"]
         rocm:
           - 5.4.1
         level:
