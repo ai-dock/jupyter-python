@@ -24,7 +24,7 @@ jobs:
         name: Env Setter
         run: |
           echo "PACKAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-          echo "TAG={{ matrix.python[0] }}-ubuntu-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
+          echo "TAG=${{ matrix.python[0] }}-ubuntu-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -42,8 +42,8 @@ jobs:
           context: build
           build-args: |
             IMAGE_BASE=ghcr.io/ai-dock/base-image:ubuntu-${{ env.UBUNTU_VERSION }}
-            PYTHON_VERSION={{ matrix.python[0] }}
-            PYTHON_MAMBA_NAME={{ matrix.python[1] }}
+            PYTHON_VERSION=${{ matrix.python[0] }}
+            PYTHON_MAMBA_NAME=${{ matrix.python[1] }}
           push: true
           # Avoids unknown/unknown architecture and extra metadata
           provenance: false
@@ -79,7 +79,7 @@ jobs:
         name: Env Setter
         run: |
           echo "PACKAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-          echo "TAG={{ matrix.python[0] }}-cuda-${{ matrix.cuda }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
+          echo "TAG=${{ matrix.python[0] }}-cuda-${{ matrix.cuda }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -97,8 +97,8 @@ jobs:
           context: build
           build-args: |
             IMAGE_BASE=ghcr.io/ai-dock/base-image:cuda-${{ matrix.cuda }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}
-            PYTHON_VERSION={{ matrix.python[0] }}
-            PYTHON_MAMBA_NAME={{ matrix.python[1] }}
+            PYTHON_VERSION=${{ matrix.python[0] }}
+            PYTHON_MAMBA_NAME=${{ matrix.python[1] }}
           push: true
           provenance: false
           tags: |
@@ -124,7 +124,7 @@ jobs:
         name: Env Setter
         run: |
           echo "PACKAGE_NAME=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-          echo "TAG={{ matrix.python[0] }}-rocm-${{ matrix.rocm }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
+          echo "TAG=${{ matrix.python[0] }}-rocm-${{ matrix.rocm }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}" >> ${GITHUB_ENV}
       -
         name: Checkout
         uses: actions/checkout@v3
@@ -142,8 +142,8 @@ jobs:
           context: build
           build-args: |
             IMAGE_BASE=ghcr.io/ai-dock/base-image:rocm-${{ matrix.rocm }}-${{ matrix.level }}-${{ env.UBUNTU_VERSION }}
-            PYTHON_VERSION={{ matrix.python[0] }}
-            PYTHON_MAMBA_NAME={{ matrix.python[1] }}
+            PYTHON_VERSION=${{ matrix.python[0] }}
+            PYTHON_MAMBA_NAME=${{ matrix.python[1] }}
           push: true
           provenance: false
           tags: |
