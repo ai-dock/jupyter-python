@@ -40,5 +40,5 @@ services:
         - 53682:53682
     environment:
         # Don't enclose values in quotes
-        - WORKSPACE=/workspace/
+        - WORKSPACE=/workspacex/
     env_file: config/env.conf

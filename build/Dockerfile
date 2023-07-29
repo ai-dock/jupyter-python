@@ -2,9 +2,9 @@
 ARG IMAGE_BASE="ghcr.io/ai-dock/base-image:cuda-11.8.0-base-22.04"
 FROM ${IMAGE_BASE}
 
-LABEL org.opencontainers.image.source https://github.com/ai-dock/extended-image-template
+LABEL org.opencontainers.image.source https://github.com/ai-dock/jupyter-python
 
-LABEL org.opencontainers.image.description "Template for images extending ai-dock/base-image"
+LABEL org.opencontainers.image.description "Jupyter lab/notebook with Python kernel"
 
 LABEL maintainer="Rob Ballantyne <rob@dynamedia.uk>"
 
@@ -21,7 +21,5 @@ ARG PYTHON_MAMBA_NAME
 # Don't put anything heavy in here - We can use multi-stage building above if necessary.
 RUN bash -c /opt/ai-dock/bin/build/layer0/init.sh
 
-# Keep these as-is. Place additional logic in /opt/ai-dock/bin/preflight.sh
-ENTRYPOINT [ "entrypoint.sh" ]
-
-CMD ["supervisord-init.sh"]
+# Keep init.sh as-is and place additional logic in /opt/ai-dock/bin/preflight.sh
+CMD ["init.sh"]

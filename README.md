@@ -1,29 +1,85 @@
-# Base Image Extension
+# Jupyter Python
 
-All ai-dock images are extended from the base image.
+Run Jupyter lab or notebook with a fresh Python installation.
 
-*** This file should form the basis for the README.md for all extended images, with nothing but this introduction removed and additional features documented as required.
+## Pre-built Images
+
+Docker images are built automatically through a GitHub Actions workflow and hosted at the GitHub Container Registry. Browse [here](https://github.com/ai-dock/jupyter-python/pkgs/container/jupyter-python) for an image suitable for your target environment.
+
+You can also self-build from source by editing `.env` and running `docker compose build`.
+
+Supported Python versions: `3.11`, `3.10`, `3.9`, `3.8`
+
+Supported Processors: `NVIDIA CUDA`, `AMD ROCm`, `CPU`
 
 ## Run Locally
 
 A 'feature-complete' docker-compose.yaml file is included for your convenience. All features of the image are included - Simply edit the environment variables, save and then type `docker compose up`.
 
+If you prefer to use the standard `docker run` syntax, the command to pass is `init.sh`.
+
 ## Run in the Cloud
 
-The image is compatible with any GPU cloud platform. You simply need to pass environment variables at runtime.
+This image should be compatible with any GPU cloud platform. You simply need to pass environment variables at runtime. Please raise an issue on this repository if your provider cannot run the image..
 
-*** These links should point to pre-configured templates ->
+*** These links should point to pre-configured templates
 All images built for ai-dock are tested for compatibility with both [vast.ai](https://cloud.vast.ai/?ref=62897) and [runpod.io](https://runpod.io?ref=m0vk9g4f).
+
+*** Paperspace will require detailed setup instructions and has no port mapping.
+Images that include Jupyter are also tested to ensure compatibility with [Paperspace Gradient](https://console.paperspace.com/signup?R=FI2IEQI)
 
 ## Environment Variables
 
 | Variable            | Description |
 | ------------------- | ----------- |
 | GPU_COUNT           | Limit the number of available GPUs |
+| JUPYTER_MODE         | `lab` (default), `notebook` |
+| JUPYTER_TOKEN       | Manually set your password |
+| RCLONE_*            | Rclone configuration - See [rclone documentation](https://rclone.org/docs/#config-file) |
+| SKIP_ACL            | Set `true` to skip modifying workspace ACL |
 | SSH_PUBKEY          | Your public key for SSH |
 | WORKSPACE           | A volume path. Defaults to `/workspace/` |
-| RCLONE_*            | Rclone configuration - See [rclone documentation](https://rclone.org/docs/#config-file) |
 
+
+Environment variables can be specified by using any of the standard methods (`docker-compose.yaml`, `docker run -e...`). Additionally, environment variables can also be passed as parameters of `init.sh`.
+
+Passing environment variables to init.sh is usually unnecessary, but is useful for some cloud environments where the full `docker run` command cannot be specified.
+
+Example usage: `docker run -e STANDARD_VAR1="this value" -e STANDARD_VAR2="that value" init.sh EXTRA_VAR="other value"`
+
+## Software Management
+
+A small software collection is installed by apt-get. This is mostly to provide basic functionality, but also includes `openssh-server` as the OS vendor is likely to be first to patch any security issues.
+
+All other software is installed into its own environment by `micromamba`, which is a drop-in replacement for conda/mamba. Read more about it [here](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html).
+
+Micromamba environments are particularly useful where several software packages are required but their dependencies conflict. 
+
+### Installed Micromamba Environments
+
+| Environment    | Packages / Rationale |
+| -------------- | ----------------------------------------- |
+| `base`         | micromamba's base environment |
+| `system`       | `supervisord`, `rclone` - latest versions |
+| `jupyter`      | `jupyter` |
+| `python_[ver]` | `python` |
+
+If you are extending this image or running an interactive session where additional software is required, you should almost certainly create a new environment first. See below for guidance.
+
+### Useful Micromamba Commands
+
+| Command                              | Function |
+| -------------------------------------| --------------------- |
+| `micromamba env list`                | List available environments |
+| `micromamba activate [name]`         | Activate the named environment |
+| `micromamba deactivate`              | Close the active environment |
+| `micromamba run -n [name] [command]` | Run a command in the named environment without activating |
+
+All ai-dock images create micromamba environments using the `--experimental` flag to enable hardlinks which can save disk space where multiple environments are available.
+
+To create an additional micromamba environment, eg for python, you can use the following:
+
+`micromamba --experimental create -y -c conda-forge -c defaults -n [name] python=3.10`
 
 ## Volumes
 
@@ -31,7 +87,7 @@ Data inside docker containers is ephemeral - You'll lose all of it when the cont
 
 You may opt to mount a data volume at `/workspace` - This is a directory that ai-dock images will look for to make downloaded data available outside of the container for persistence. 
 
-This is usually of importance where large files are downloaded at runtime.  Any image that makes use of this directory should replace this paragraph and document how and why /workspace is being utilised.
+This is usually of importance where large files are downloaded at runtime or if you need a space to save your work. This is the ideal location to store Jupyter notebooks(.ipynb) and datasets.
 
 You can define an alternative path for the workspace directory by passing the environment variable `WORKSPACE=/my/alternative/path/` and mounting your volume there. This feature will generally assist where cloud providers enforce their own mountpoint location for persistent storage.
 
@@ -45,7 +101,15 @@ If you do not want this, you can set the environment variable `SKIP_ACL=true`.
 
 ## Running Services
 
-This image will spawn multiple processes upon starting a container. All processes are managed by supervisord so will restart upon failure until you either manually stop them or terminate the container.
+This image will spawn multiple processes upon starting a container. All processes are managed by [supervisord](https://supervisord.readthedocs.io/en/latest/) so will restart upon failure until you either manually stop them or terminate the container.
+
+### Jupyter
+
+The jupyter server will launch a `lab` instance unless you specify `JUPYTER_MODE=notebook`.
+
+The server will listen on port `8888` which you should map to a port on the host machine.
+
+A python kernel will be installed coresponding with the python version(s) of the image.
 
 ### SSHD
 
@@ -98,4 +162,5 @@ Some ports need to be exposed for the services to run or for certain features of
 | Open Port           | Service / Description |
 | ------------------- | --------------------- |
 | 22                  | SSH server            |
+| 8888                | Jupyter server |
 | 53682               | Rclone interactive config |
