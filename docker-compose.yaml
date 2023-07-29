@@ -10,8 +10,8 @@ services:
         PYTHON_VERSION: ${PYTHON_VERSION}
         PYTHON_MAMBA_NAME: ${PYTHON_MAMBA_NAME}
       tags:
-        - "ghcr.io/ai-dock/extended-base-template:${IMAGE_TAG}"
-    image: ghcr.io/ai-dock/extended-base-template:${IMAGE_TAG}
+        - "ghcr.io/ai-dock/jupyter-python:${IMAGE_TAG}"
+    image: ghcr.io/ai-dock/jupyter-python:${IMAGE_TAG}
     security_opt:
       - apparmor:unconfined
     cap_add:
@@ -40,5 +40,5 @@ services:
         - 53682:53682
     environment:
         # Don't enclose values in quotes
-        - WORKSPACE=/workspacex/
+        - WORKSPACE=/workspace/
     env_file: config/env.conf
