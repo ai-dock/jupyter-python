@@ -14,6 +14,10 @@ LABEL maintainer="Rob Ballantyne <rob@dynamedia.uk>"
 # Copy early so we can use scripts in the build - Changes to these files will invalidate the cache and cause a rebuild.
 COPY ./COPY_ROOT/ /
 
+# Define the startup mamba environment for interactive sessions
+ARG MAMBA_DEFAULT_ENV=system
+ENV MAMBA_DEFAULT_ENV=${MAMBA_DEFAULT_ENV}
+
 ARG PYTHON_VERSION
 ARG PYTHON_MAMBA_NAME
 

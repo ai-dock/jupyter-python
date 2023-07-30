@@ -6,9 +6,9 @@ services:
       context: ./build
       args:
         IMAGE_BASE: ${IMAGE_BASE}
-        IMAGE_TAG: ${IMAGE_TAG}
         PYTHON_VERSION: ${PYTHON_VERSION}
         PYTHON_MAMBA_NAME: ${PYTHON_MAMBA_NAME}
+        MAMBA_DEFAULT_ENV:  ${PYTHON_MAMBA_NAME}
       tags:
         - "ghcr.io/ai-dock/jupyter-python:${IMAGE_TAG}"
     image: ghcr.io/ai-dock/jupyter-python:${IMAGE_TAG}
@@ -41,4 +41,6 @@ services:
     environment:
         # Don't enclose values in quotes
         - WORKSPACE=/workspace/
+        #- JUPYTER_MODE=notebook
+        #- JUPYTER_TOKEN=password
     env_file: config/env.conf
