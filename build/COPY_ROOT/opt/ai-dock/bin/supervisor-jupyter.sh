@@ -19,6 +19,6 @@ micromamba run -n jupyter jupyter \
     --ServerApp.allow_remote_access=True \
     --ServerApp.allow_origin='*' \
     --ServerApp.allow_credentials=True \
-    --ServerApp.notebook_dir=$WORKSPACE \
+    --ServerApp.root_dir=$WORKSPACE \
     --ServerApp.preferred_dir=$WORKSPACE \
     --KernelSpecManager.ensure_native_kernel=False

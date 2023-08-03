@@ -10,7 +10,7 @@
   "-f",
   "{connection_file}"
  ],
- "display_name": "Python PYTHON_MAJOR_VERSION (ipykernel)",
+ "display_name": "DISPLAY_NAME",
  "language": "python",
  "metadata": {
   "debugger": true
