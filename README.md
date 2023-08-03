@@ -46,8 +46,8 @@ __Container Cloud__
 
 Container providers don't give you access to the docker host but are quick and easy to set up. They are often inexpensive when compared to a full VM or bare metal solution.
 
-All images built for ai-dock are tested for compatibility with both [vast.ai](https://cloud.vast.ai/?ref=62897) and [runpod.io](https://runpod.io?ref=m0vk9g4f).
-.
+All images built for ai-dock are tested for compatibility with both [vast.ai](https://cloud.vast.ai/?ref_id=62897&template_id=24694ce07616536027f37359c95f0d7c) and [runpod.io](https://runpod.io/gsc?template=qcnhzcoflg&ref=m0vk9g4f).
+
 Images that include Jupyter are also tested to ensure compatibility with [Paperspace Gradient](https://console.paperspace.com/signup?R=FI2IEQI)
 
 See a list of pre-configured templates [here](#pre-configured-templates)
@@ -240,10 +240,10 @@ Some ports need to be exposed for the services to run or for certain features of
 ## Pre-Configured Templates
 
 **Vast.​ai**
-[Python All]()
+[Python All](https://cloud.vast.ai/?ref_id=62897&template_id=24694ce07616536027f37359c95f0d7c)
 
 **Runpod.​io**
-[Python All]()
+[Python All](https://runpod.io/gsc?template=qcnhzcoflg&ref=m0vk9g4f)
 
 **Paperspace**
 - Create a new notebook with the `Start from Scratch` template.
