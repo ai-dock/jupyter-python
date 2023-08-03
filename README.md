@@ -4,7 +4,7 @@ Run Jupyter lab or notebook with a (quite) fresh Python installation. No assumpt
 
 ## About Jupyter
 
-Jupyter is an interactive computing environment widely used in data analysis, data science, and research. It serves as the next-generation interface for Jupyter, offering a flexible workspace with a multi-panel layout. Jupyter supports various programming languages like Python, R, and Julia, enabling users to create and share documents containing live code, visualizations, and narrative text - This image provides a Python 3.x kernel.
+Jupyter is an interactive computing environment widely used in data analysis, data science, and research. It serves as the next-generation interface for Jupyter, offering a flexible workspace with a multi-panel layout. Jupyter supports various programming languages like Python, R, and Julia, enabling users to create and share documents containing live code, visualizations, and narrative text - This image provides Python kernels.
 
 Within Jupyter, users can arrange notebooks, text files, terminal windows, and other components in a customizable workspace. The platform provides advanced functionalities such as drag-and-drop support for files, rich text editors, and interactive visualizations, empowering data analysts, scientists, and researchers to explore data, conduct analysis, and experiment with code more effectively.
 
@@ -246,7 +246,7 @@ Some ports need to be exposed for the services to run or for certain features of
 [Python All](https://runpod.io/gsc?template=qcnhzcoflg&ref=m0vk9g4f)
 
 **Paperspace**
-- Create a new notebook with the `Start from Scratch` template.
+- Create a [new notebook](https://console.paperspace.com/signup?R=FI2IEQI) with the `Start from Scratch` template.
 - Select `Advanced options`
 - In Container Name enter `ghcr.io/ai-dock/jupyter-python:all-cuda-11.8.0-cudnn8-runtime-22.04`
 - In Registry Username enter `x` (Paperspace bug)
