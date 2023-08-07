@@ -59,7 +59,7 @@ __Container Cloud__
 
 Container providers don't give you access to the docker host but are quick and easy to set up. They are often inexpensive when compared to a full VM or bare metal solution.
 
-All images built for ai-dock are tested for compatibility with both [vast.ai](https://cloud.vast.ai/?ref_id=62897&template_id=24694ce07616536027f37359c95f0d7c) and [runpod.io](https://runpod.io/gsc?template=qcnhzcoflg&ref=m0vk9g4f).
+All images built for ai-dock are tested for compatibility with both [vast.ai](https://cloud.vast.ai/?ref_id=62897&template_id=7c6e86d5035f93c0d1a11c9e3f73be09) and [runpod.io](https://runpod.io/gsc?template=qcnhzcoflg&ref=m0vk9g4f).
 
 Images that include Jupyter are also tested to ensure compatibility with [Paperspace Gradient](https://console.paperspace.com/signup?R=FI2IEQI)
 
@@ -267,21 +267,29 @@ Some ports need to be exposed for the services to run or for certain features of
 ## Pre-Configured Templates
 
 **Vast.​ai**
-[Python All](https://cloud.vast.ai/?ref_id=62897&template_id=24694ce07616536027f37359c95f0d7c)
+
+[jupyter-python:latest](https://cloud.vast.ai/?ref_id=62897&template_id=7c6e86d5035f93c0d1a11c9e3f73be09)
+
+---
 
 **Runpod.​io**
-[Python All](https://runpod.io/gsc?template=qcnhzcoflg&ref=m0vk9g4f)
+
+[jupyter-python:latest](https://runpod.io/gsc?template=qcnhzcoflg&ref=m0vk9g4f)
+
+---
 
 **Paperspace**
+
 - Create a [new notebook](https://console.paperspace.com/signup?R=FI2IEQI) with the `Start from Scratch` template.
 - Select `Advanced options`
-- In Container Name enter `ghcr.io/ai-dock/jupyter-python:all-cuda-11.8.0-cudnn8-runtime-22.04`
+- In Container Name enter `ghcr.io/ai-dock/jupyter-python:latest`
 - In Registry Username enter `x` (Paperspace bug)
 - In Command enter `init.sh WORKSPACE=/notebooks`
 
+---
 
 >[!NOTE]  
->These templates are configured to use Python `all` with the `cuda-11.8-0-cudnn8-runtime` tag but you are free to change to any of the available Python CUDA tags listed [here](https://github.com/ai-dock/jupyter-python/pkgs/container/jupyter-python)
+>These templates are configured to use Python `all` with the `latest` tag but you are free to change to any of the available Python CUDA tags listed [here](https://github.com/ai-dock/jupyter-python/pkgs/container/jupyter-python)
 
 ## Compatible VM Providers
 
