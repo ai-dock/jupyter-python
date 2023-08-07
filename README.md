@@ -14,17 +14,25 @@ Docker images are built automatically through a GitHub Actions workflow and host
 
 #### Version Tags
 
-There is no `latest` tag.
+The `:latest` tag points to `:latest-cuda`
+
 Tags follow these patterns:
 
 ##### _CUDA_
-`:[python-version]-cuda-[x.x.x]{-cudnn[x]}-[base|runtime|devel]-[ubuntu-version]`
+- `:[python-version]-cuda-[x.x.x]{-cudnn[x]}-[base|runtime|devel]-[ubuntu-version]`
 
+- `:latest-cuda` -> `:all-cuda-11.8.0-cudnn8-runtime-22.04`
 ##### _ROCm_
-`:[python-version]-rocm-[x.x.x]-[core|runtime|devel]-[ubuntu-version]`
+- `:[python-version]-rocm-[x.x.x]-[core|runtime|devel]-[ubuntu-version]`
+
+- `:latest-rocm` -> `:all-rocm-5.4.2-runtime-22.04`
+
+ROCm builds are experimental. Please give feedback.
 
 ##### _CPU_
-`:[python-version]-ubuntu-[ubuntu-version]`
+- `:[python-version]-cpu-[ubuntu-version]`
+
+- `:latest-cpu` -> `:all-cpu-22.04`
 
 Browse [here](https://github.com/ai-dock/jupyter-python/pkgs/container/jupyter-python) for an image suitable for your target environment.
 
@@ -41,6 +49,11 @@ A 'feature-complete' docker-compose.yaml file is included for your convenience. 
 If you prefer to use the standard `docker run` syntax, the command to pass is `init.sh`.
 
 ## Run in the Cloud
+
+This image should be compatible with any GPU cloud platform. You simply need to pass environment variables at runtime. 
+
+>[!NOTE]  
+>Please raise an issue on this repository if your provider cannot run the image.
 
 __Container Cloud__
 
@@ -89,17 +102,31 @@ If you are unfamiliar with port forwarding then you should read the guides [here
 | `GPU_COUNT`           | Limit the number of available GPUs |
 | `JUPYTER_MODE`        | `lab` (default), `notebook` |
 | `JUPYTER_TOKEN`       | Manually set your password |
+| `PROVISIONING_SCRIPT` | URL of a remote script to execute on init. See [note](#provisioning-script). |
 | `RCLONE_*`            | Rclone configuration - See [rclone documentation](https://rclone.org/docs/#config-file) |
 | `SKIP_ACL`            | Set `true` to skip modifying workspace ACL |
 | `SSH_PUBKEY`          | Your public key for SSH |
 | `WORKSPACE`           | A volume path. Defaults to `/workspace/` |
-
 
 Environment variables can be specified by using any of the standard methods (`docker-compose.yaml`, `docker run -e...`). Additionally, environment variables can also be passed as parameters of `init.sh`.
 
 Passing environment variables to init.sh is usually unnecessary, but is useful for some cloud environments where the full `docker run` command cannot be specified.
 
 Example usage: `docker run -e STANDARD_VAR1="this value" -e STANDARD_VAR2="that value" init.sh EXTRA_VAR="other value"`
+
+## Provisioning script
+
+It can be useful to perform certain actions when starting a container, such as creating directories and downloading files.
+
+You can use the environment variable `PROVISIONING_SCRIPT` to specify the URL of a script you'd like to run.
+
+If you are running locally you may instead opt to mount an executable script at `/opt/ai-dock/bin/provisioning.sh`.
+
+>[!NOTE]  
+>`supervisord` will not spawn any processes until the provisioning script has completed.
+
+>[!WARNING]  
+>Only use scripts that you trust and which cannot be changed without your consent.
 
 ## Software Management
 
@@ -133,7 +160,7 @@ All ai-dock images create micromamba environments using the `--experimental` fla
 
 To create an additional micromamba environment, eg for python, you can use the following:
 
-`micromamba --experimental create -y -c conda-forge -c defaults -n [name] python=3.10`
+`micromamba --experimental create -y -c conda-forge -n [name] python=3.10`
 
 ## Volumes
 
@@ -258,7 +285,7 @@ Some ports need to be exposed for the services to run or for certain features of
 
 ## Compatible VM Providers
 
-Images that do not require a GPU will run anywhere - Use an image tagged `:*-ubuntu-xx.xx`
+Images that do not require a GPU will run anywhere - Use an image tagged `:*-cpu-xx.xx`
 
 Where a GPU is required you will need either `:*cuda*` or `:*rocm*` depending on the underlying hardware.
 

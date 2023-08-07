@@ -7,7 +7,7 @@ kernel_path=/usr/local/share/jupyter/kernels/
 
 main() {
     install_jupyter
-    install_python
+    install_ipykernel
 }
 
 install_jupyter() {
@@ -22,7 +22,6 @@ install_jupyter() {
 }
 
 do_mamba_install() {
-    $MAMBA_CREATE -n "$1" python="$2"
         micromamba -n "$1" install -c conda-forge -c defaults -y \
             ipykernel \
             ipywidgets
@@ -46,42 +45,42 @@ do_kernel_install() {
     sed -i 's/PYTHON_MAMBA_NAME/'"$1"'/g' ${file}
 }
 
-install_python() {
+install_ipykernel() {
     if [[ $PYTHON_VERSION != "all" ]]; then
         major=${PYTHON_VERSION:0:1}
-        do_mamba_install "${PYTHON_MAMBA_NAME}" "${PYTHON_VERSION}"
+        do_mamba_install "${PYTHON_MAMBA_NAME}"
         do_kernel_install "${PYTHON_MAMBA_NAME}" "${PYTHON_VERSION}" "python${major}" "Python${major} (ipykernel)"
     else
         # Multi Python - Use $PYTHON_MAMBA_NAME as default kernel
-        do_mamba_install "python_27" "2.7"
+        do_mamba_install "python_27"
         if [[ $PYTHON_MAMBA_NAME = "python_27" ]]; then
             do_kernel_install "python_27" "2.7" "python2" "Python2 (ipykernel)"
         else
             do_kernel_install "python_27" "2.7"
         fi
         
-        do_mamba_install "python_38" "3.8"
+        do_mamba_install "python_38"
         if [[ $PYTHON_MAMBA_NAME = "python_38" ]]; then
             do_kernel_install "python_38" "3.8" "python3" "Python3 (ipykernel)"
         else
             do_kernel_install "python_38" "3.8"
         fi
         
-        do_mamba_install "python_39" "3.9"
+        do_mamba_install "python_39"
         if [[ $PYTHON_MAMBA_NAME = "python_39" ]]; then
             do_kernel_install "python_39" "3.9" "python3" "Python3 (ipykernel)"
         else
             do_kernel_install "python_39" "3.9"
         fi
         
-        do_mamba_install "python_310" "3.10"
+        do_mamba_install "python_310"
         if [[ $PYTHON_MAMBA_NAME = "python_310" ]]; then
             do_kernel_install "python_310" "3.10" "python3" "Python3 (ipykernel)"
         else
             do_kernel_install "python_310" "3.10"
         fi
         
-        do_mamba_install "python_311" "3.11"
+        do_mamba_install "python_311"
         if [[ $PYTHON_MAMBA_NAME = "python_311" ]]; then
             do_kernel_install "python_311" "3.11" "python3" "Python3 (ipykernel)"
         else
