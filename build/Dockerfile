@@ -1,10 +1,10 @@
 # For build automation - Allows building from any ai-dock base image
-ARG IMAGE_BASE="ghcr.io/ai-dock/base-image:cuda-11.8.0-base-22.04"
+ARG IMAGE_BASE="ghcr.io/ai-dock/python:all-cuda-11.8.0-cudnn8-runtime-22.04"
 FROM ${IMAGE_BASE}
 
 LABEL org.opencontainers.image.source https://github.com/ai-dock/jupyter-python
 
-LABEL org.opencontainers.image.description "Jupyter lab/notebook with Python kernel"
+LABEL org.opencontainers.image.description "Jupyter lab/notebook with Python kernels"
 
 LABEL maintainer="Rob Ballantyne <rob@dynamedia.uk>"
 
@@ -14,12 +14,7 @@ LABEL maintainer="Rob Ballantyne <rob@dynamedia.uk>"
 # Copy early so we can use scripts in the build - Changes to these files will invalidate the cache and cause a rebuild.
 COPY ./COPY_ROOT/ /
 
-# Define the startup mamba environment for interactive sessions
-ARG MAMBA_DEFAULT_ENV=system
-ENV MAMBA_DEFAULT_ENV=${MAMBA_DEFAULT_ENV}
-
-ARG PYTHON_VERSION
-ARG PYTHON_MAMBA_NAME
+# Default env inherited from ghcr.io/ai-dock/python
 
 # Use build scripts to ensure we can build all targets from one Dockerfile in a single layer.
 # Don't put anything heavy in here - We can use multi-stage building above if necessary.
