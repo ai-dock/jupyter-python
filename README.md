@@ -1,3 +1,5 @@
+[![Docker Build](https://github.com/ai-dock/jupyter-python/actions/workflows/docker-build.yml/badge.svg)](https://github.com/ai-dock/jupyter-python/actions/workflows/docker-build.yml)
+
 # Jupyter Python
 
 Run Jupyter lab or notebook with a (quite) fresh Python installation. No assumptions have been made about your use case so nothing but iPython support is included.
