@@ -17,7 +17,10 @@ fi
 
 printf "Starting Jupyter %s...\n" $JUPYTER_MODE
 
-wait -n
+if [[ $CF_QUICK_TUNNELS = "true" ]]; then
+    cloudflared tunnel --url localhost:${JUPYTER_PORT} > /var/log/supervisor/quicktunnel-jupyter.log 2>&1 &
+fi
+
 micromamba run -n jupyter jupyter \
     $JUPYTER_MODE \
     --allow-root \
@@ -32,3 +35,4 @@ micromamba run -n jupyter jupyter \
     --ServerApp.root_dir=$WORKSPACE \
     --ServerApp.preferred_dir=$WORKSPACE \
     --KernelSpecManager.ensure_native_kernel=False
+
