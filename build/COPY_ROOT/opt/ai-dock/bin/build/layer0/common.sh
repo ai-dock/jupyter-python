@@ -32,14 +32,14 @@ do_kernel_install() {
         # Add a clone, probably the often-present Python3 (ipykernel) pointed to our default python install
         dir="${kernel_path}${3}/"
         file="${dir}kernel.json"
-        cp -rf ${kernel_path}_template ${dir}
+        cp -rf ${kernel_path}../_template ${dir}
             
         sed -i 's/DISPLAY_NAME/'"$4"'/g' ${file}
         sed -i 's/PYTHON_MAMBA_NAME/'"$1"'/g' ${file}
     fi
     dir="${kernel_path}$1/"
     file="${dir}kernel.json"
-    cp -rf ${kernel_path}_template ${dir}
+    cp -rf ${kernel_path}../_template ${dir}
     
     sed -i 's/DISPLAY_NAME/'"Python $2"'/g' ${file}
     sed -i 's/PYTHON_MAMBA_NAME/'"$1"'/g' ${file}
@@ -87,8 +87,6 @@ install_ipykernel() {
             do_kernel_install "python_311" "3.11"
         fi
     fi
-    
-    rm -rf ${kernel_path}_template
 }
 
 main "$@"; exit
