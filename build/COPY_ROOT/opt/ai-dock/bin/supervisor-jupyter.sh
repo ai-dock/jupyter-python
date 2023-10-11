@@ -39,7 +39,7 @@ if [[ -f /run/workspace_moving ]]; then
     /usr/bin/python3 /opt/ai-dock/fastapi/logviewer/main.py \
         -p $LISTEN_PORT \
         -r 5 \
-        -s ${SERVICE_NAME} \
+        -s "${SERVICE_NAME}" \
         -t "Preparing ${SERVICE_NAME}" &
     fastapi_pid=$!
     
