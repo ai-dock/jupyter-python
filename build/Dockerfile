@@ -8,6 +8,7 @@ LABEL org.opencontainers.image.description "Jupyter lab/notebook with Python ker
 
 LABEL maintainer="Rob Ballantyne <rob@dynamedia.uk>"
 
+ENV OPT_SYNC=$OPT_SYNC
 ENV IMAGE_SLUG="jupyter-python"
 
 # Add new paths at front 
