@@ -355,7 +355,7 @@ Some ports need to be exposed for the services to run or for certain features of
 | Open Port             | Service / Description     |
 | --------------------- | ------------------------- |
 | `22`                  | SSH server                |
-| `1111`                | Port redirector web UI    |
+| `1111`                | Service portal web UI     |
 | `8888`                | Jupyter server            |
 | `53682`               | Rclone interactive config |
 
