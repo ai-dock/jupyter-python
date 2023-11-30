@@ -86,6 +86,13 @@ install_ipykernel() {
         else
             do_kernel_install "python_311" "3.11"
         fi
+        
+        do_mamba_install "python_312"
+        if [[ $PYTHON_MAMBA_NAME = "python_312" ]]; then
+            do_kernel_install "python_312" "3.12" "python3" "Python3 (ipykernel)"
+        else
+            do_kernel_install "python_312" "3.12"
+        fi
     fi
 }
 

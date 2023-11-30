@@ -34,7 +34,7 @@ Tags follow these patterns:
 ##### _ROCm_
 - `:[python-version]-rocm-[x.x.x]-[core|runtime|devel]-[ubuntu-version]`
 
-- `:latest-rocm` -> `:all-rocm-5.4.2-runtime-22.04`
+- `:latest-rocm` -> `:all-rocm-5.6-runtime-22.04`
 
 ROCm builds are experimental. Please give feedback.
 
@@ -47,7 +47,7 @@ Browse [here](https://github.com/ai-dock/jupyter-python/pkgs/container/jupyter-p
 
 You can also self-build from source by editing `.env` and running `docker compose build`.
 
-Supported Python versions: `all` `3.11`, `3.10`, `3.9`, `3.8`, `2.7`
+Supported Python versions: `all`, `3.12`, `3.11`, `3.10`, `3.9`, `3.8`, `2.7`
 
 Supported Platforms: `NVIDIA CUDA`, `AMD ROCm`, `CPU`
 
