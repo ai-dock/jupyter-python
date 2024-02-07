@@ -6,14 +6,17 @@ kernel_path=/usr/local/share/jupyter/kernels/
 build_common_main() {
     build_common_install_jupyter
     build_common_install_ipykernel
+    rm /etc/ld.so.cache
+    ldconfig
 }
 
 build_common_install_jupyter() {
     $MAMBA_CREATE -n jupyter python=3.10
+    printf "/opt/micromamba/envs/jupyter/lib\n" >> /etc/ld.so.conf.d/x86_64-linux-gnu.micromamba.90-jupyter.conf
     $MAMBA_INSTALL -n jupyter \
         jupyter \
         jupyterlab \
-        nodejs=18
+        nodejs=20
     # This must remain clean. User software should not be in this environment
     printf "Removing default ipython kernel...\n"
     rm -rf /opt/micromamba/envs/jupyter/share/jupyter/kernels/python3
