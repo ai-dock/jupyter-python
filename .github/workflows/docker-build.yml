@@ -8,8 +8,8 @@ on:
 env:
   UBUNTU_VERSION: 22.04
   BUILDX_NO_DEFAULT_ATTESTATIONS: 1
-  LATEST_CUDA: "3.12-cuda-12.2.0-runtime-22.04"
-  LATEST_ROCM: "3.12-rocm-5.6-runtime-22.04"
+  LATEST_CUDA: "3.12-cuda-12.3.1-runtime-22.04"
+  LATEST_ROCM: "3.12-rocm-6.0.2-runtime-22.04"
   LATEST_CPU: "3.12-cpu-22.04"
 
 jobs:
@@ -19,9 +19,6 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          #- "2.7"
-          #- "3.8"
-          #- "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
@@ -80,29 +77,19 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          #- "2.7"
-          #- "3.8"
-          #- "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
           #- "all"
         cuda:
-          - "11.7.1"
           - "11.8.0"
           - "12.1.0"
           - "12.2.0"
+          - "12.3.1"
         level:
           - "base"
           - "runtime"
           - "devel"
-          - "cudnn8-runtime"
-          - "cudnn8-devel"
-        exclude:
-          - cuda: "12.2.0"
-            level: "cudnn8-runtime" # Not yet available
-          - cuda: "12.2.0"
-            level: "cudnn8-devel" # Not yet available
     steps:
       -
         name: Free Space
@@ -156,9 +143,6 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          #- "2.7"
-          #- "3.8"
-          #- "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
@@ -166,6 +150,8 @@ jobs:
         rocm:
           - "5.4.2"
           - "5.6"
+          - "5.7"
+          - "6.0.2"
         level:
           - "core"
           - "runtime"

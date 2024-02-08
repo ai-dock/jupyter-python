@@ -6,8 +6,6 @@ kernel_path=/usr/local/share/jupyter/kernels/
 build_common_main() {
     build_common_install_jupyter
     build_common_install_ipykernel
-    rm /etc/ld.so.cache
-    ldconfig
 }
 
 build_common_install_jupyter() {

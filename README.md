@@ -28,13 +28,13 @@ The `:latest` tag points to `:latest-cuda`
 Tags follow these patterns:
 
 ##### _CUDA_
-- `:[python-version]-cuda-[x.x.x]{-cudnn[x]}-[base|runtime|devel]-[ubuntu-version]`
+- `:[python-version]-cuda-[x.x.x]-[base|runtime|devel]-[ubuntu-version]`
 
-- `:latest-cuda` -> `:3.12-cuda-12.2.0-cudnn8-runtime-22.04`
+- `:latest-cuda` -> `:3.12-cuda-12.3.1-runtime-22.04`
 ##### _ROCm_
 - `:[python-version]-rocm-[x.x.x]-[core|runtime|devel]-[ubuntu-version]`
 
-- `:latest-rocm` -> `:3.12-rocm-5.6-runtime-22.04`
+- `:latest-rocm` -> `:3.12-rocm-6.0.2-runtime-22.04`
 
 ROCm builds are experimental. Please give feedback.
 
