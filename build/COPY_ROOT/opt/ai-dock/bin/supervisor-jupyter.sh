@@ -91,7 +91,7 @@ function start() {
             --ServerApp.allow_origin='*' \
             --ServerApp.allow_credentials=True \
             --ServerApp.root_dir=/ \
-            --ServerApp.preferred_dir=$WORKSPACE \
+            --ServerApp.preferred_dir="$WORKSPACE" \
             --ServerApp.terminado_settings="{'shell_command': ['bash','-c','bash']}" \
             --KernelSpecManager.ensure_native_kernel=False
 }
